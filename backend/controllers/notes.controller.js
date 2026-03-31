@@ -1,20 +1,23 @@
-const {statusCodes} = require("http-error-codes");
-const {client, MONGO_DATABASE} = require("../index.js");
-const { createNoteSchema } = require("../schemas/notes.schemas.js");
+const createNote = async (req, res) => {
+  try {
+    const { title, content } = req.body;
 
-const createNote = async (request, response) => {
-    try {
-        const {title, content} = request.body;
-        const {error} = createNoteSchema.validate({title, content});
-        if (error) {
-            return response.status(statusCodes.BAD_REQUEST).send({
-                message: error.details[0].message,
-            });
-        }} 
-    catch (error) {
-        return response.status(statusCodes.INTERNAL_SERVER_ERROR).send({
-            message: "Something went wrong",
-        });
-    }};
+
+    if (!title || !content) return res.status(400).json({ message: "Title & content required" });
+
+
+    const { createNote } = require("../service/notes.js");
+    const result = await createNote(req.dbClient, req.dbName, title, content);
+
+
+    return res.status(201).json({
+      message: "Note created successfully",
+      noteId: result.insertedId,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
 
 module.exports = { createNote };

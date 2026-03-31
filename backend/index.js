@@ -1,36 +1,36 @@
-
-const express = require('express');
-const cors = require("cors"); 
+require('dotenv').config(); 
+const express = require("express");
 const { MongoClient } = require("mongodb");
-const dotenv = require("dotenv");
-const http = require("http");
+const notesRouter = require("./router/notes.router.js");
 
-dotenv.config();
+const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+app.use(cors());
+app.use(express.json());
 
-
+const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
-const MONGO_DATABASE = process.env.MONGO_DATABASE || "notes";
+const MONGO_DATABASE = process.env.MONGO_DATABASE;
 
 const client = new MongoClient(MONGO_URL);
-client.connect()
-  .catch((err) => console.error("MongoDB connection error:", err));
 
-app.use(express.json());
-app.use(cors());
+async function startServer() {
+  try {
+    await client.connect();
+    console.log("MongoDB connected");
 
+   
+    app.use("/notes", (req, res, next) => {
+      req.dbClient = client;
+      req.dbName = MONGO_DATABASE;
+      next();
+    }, notesRouter);
 
-const notesRouter = require("./router/notes.router.js");
-app.use("/api/notes", notesRouter);
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  } catch (err) {
+    console.error(err);
+  }
+}
 
-
-app.get("/", (req, res) => {
-  res.send({ message: "Welcome to Note Management API" });
-});
-
-const server = http.createServer(app);
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-module.exports = { client, MONGO_DATABASE };
+startServer();

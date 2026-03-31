@@ -1,24 +1,13 @@
 const { MongoClient } = require("mongodb");
-const { client, MONGO_DATABASE } = require("../index.js");
 
-const getNotes = async () => {
-    return await client
-    .db(MONGO_DATABASE)
-    .collection("user_notes")
-    .find({})
-    .toArray();
+const getNotes = async (dbClient, dbName) => {
+  return await dbClient.db(dbName).collection("user_notes").find({}).toArray();
 };
 
-const createNote = async (title, content) => {
-    const note = {
-        title,
-        content,
-    };
-    const result = await client
-    .db(MONGO_DATABASE) 
-    .collection("user_notes")
-    .insertOne(note);
-    return result;
+const createNote = async (dbClient, dbName, title, content) => {
+  if (!dbClient) throw new Error("dbClient is undefined");
+  const note = { title, content };
+  return await dbClient.db(dbName).collection("user_notes").insertOne(note);
 };
 
 module.exports = { getNotes, createNote };

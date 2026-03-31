@@ -1,0 +1,106 @@
+/* Container for whole form and notes */
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+.heading {
+  text-align: center;
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+/* Form styling */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+}
+
+.input, .textarea {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input:focus, .textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Button styling */
+.button {
+  width: 150px;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+  align-self: flex-start;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Notes display */
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Individual note cards */
+.note-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 15px 20px;
+  background-color: #fefefe;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.note-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.note-title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.note-content {
+  margin: 0;
+  font-size: 15px;
+  color: #555;
+  line-height: 1.5;
+}

@@ -1,8 +1,8 @@
-const joi = require("joi");
+const Joi = require("joi");
 
-const createNoteSchema = joi.object({
-    title: joi.string().required(),
-    content: joi.string().required(),
+const createNoteSchema = Joi.object({
+    title: Joi.string().required(),
+    content: Joi.string().required(),
 });
 
-exports = { createNoteSchema };
+module.exports = { createNoteSchema };  
